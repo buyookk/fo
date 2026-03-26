@@ -1,0 +1,18 @@
+let piscadas = 0;
+let lanternaAcesa = false;
+
+function usarLanterna() {
+    lanternaAcesa = true;
+    piscadas++;
+
+    // Se o animatrônico estiver no corredor e você piscar 3 vezes...
+    if (inimigoNoCorredor && piscadas >= 3) {
+        console.log("Ele se assustou e foi embora!");
+        inimigoNoCorredor = false;
+        piscadas = 0; // Reseta para a próxima vez
+        voltarParaOPalco(); 
+    }
+    
+    // Timer para a lanterna apagar sozinha (efeito de piscar)
+    setTimeout(() => { lanternaAcesa = false; }, 200);
+}
