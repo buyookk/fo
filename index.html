@@ -14,6 +14,49 @@
         }
         .active { display: block; }
 
+        /* Estilização do Menu Principal */
+        #menu {
+            background-image: url('https://raw.githubusercontent.com/buyookk/fo/main/imagens/Gemini_Generated_Image_8juxxa8juxxa8jux.png');
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .menu-content {
+            margin-left: 5%;
+            text-align: left;
+        }
+
+        .menu-title {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 10px black;
+        }
+
+        /* Botões de ação transparentes */
+        .btn-menu {
+            display: block;
+            background: rgba(255, 255, 255, 0.05); /* Bem transparente */
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            padding: 10px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            width: fit-content;
+        }
+
+        .btn-menu:hover {
+            background: rgba(255, 255, 255, 0.2);
+            padding-left: 40px; /* Efeito de deslizar do original */
+            text-shadow: 0 0 8px white;
+        }
+
+        /* Estilos do Jogo */
         .btn-nav { 
             position: absolute; bottom: 20px; padding: 15px 25px; 
             background: rgba(0,0,0,0.7); border: 1px solid white; color: white; cursor: pointer; z-index: 10; 
@@ -37,11 +80,13 @@
 <body>
 
 <div id="game-container">
-    <div id="menu" class="screen active" style="background-image: url('https://github.com/buyookk/fo/blob/main/imagens/escrit%C3%B3rio.png?raw=true');">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; background: rgba(0,0,0,0.8); padding: 30px;">
-            <h1>FREDDY'S NIGHT</h1>
-            <button onclick="startGame()" style="padding: 15px 40px; font-size: 20px; cursor: pointer;">CONTINUAR</button>
+    <div id="menu" class="screen active">
+        <div class="menu-content">
+            <h1 class="menu-title">Five <br> Nights <br> at <br> Freddy's</h1>
+            <button class="btn-menu" onclick="startGame()">>> New Game</button>
+            <button class="btn-menu" onclick="startGame()">Continue</button>
         </div>
+        <div style="position: absolute; bottom: 10px; left: 10px; font-size: 12px; opacity: 0.5;">v 1.0</div>
     </div>
 
     <div id="office" class="screen" style="background-image: url('https://github.com/buyookk/fo/blob/main/imagens/escrit%C3%B3rio.png?raw=true');">
@@ -97,7 +142,7 @@
     let isPlaying = false;
     let currentCam = "palco";
     let inRoom = "menu";
-    let corredorTimer = null; // Timer para checar se o jogador viu o Freddy
+    let corredorTimer = null;
 
     function startGame() {
         isPlaying = true;
@@ -128,14 +173,13 @@
                 freddyPos = path[idx + 1];
                 console.log("Freddy está no: " + freddyPos);
 
-                // Se ele chegou no corredor, ele espera 5 segundos antes de entrar na sala
                 if (freddyPos === "corredor") {
                     corredorTimer = setTimeout(() => {
                         if (freddyPos === "corredor") {
                             freddyPos = "sala";
                             console.log("Freddy ENTROU NA SALA!");
                         }
-                    }, 5000); // 5 segundos para o jogador reagir
+                    }, 5000);
                 }
                 
                 if (document.getElementById('camera-system').style.display === 'block') setCam(currentCam);
@@ -155,7 +199,6 @@
         const corr = document.getElementById('corridor');
         if (freddyPos === "corredor") {
             corr.style.backgroundImage = `url('${ASSETS.corredor_freddy}')`;
-            // Jogador viu ele! Cancela a entrada na sala e manda pro palco
             clearTimeout(corredorTimer);
             setTimeout(() => { 
                 freddyPos = "palco"; 
