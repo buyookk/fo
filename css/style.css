@@ -1,1 +1,24 @@
-body { background: black; }
+body { margin: 0; background: black; color: white; font-family: sans-serif; overflow: hidden; }
+#game-container { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+
+.screen { position: absolute; width: 100%; height: 100%; display: none; background-size: cover; background-position: center; }
+.active { display: block; }
+
+/* Botões de Navegação */
+.btn-nav { position: absolute; bottom: 20px; padding: 15px; background: rgba(0,0,0,0.7); border: 1px solid white; color: white; cursor: pointer; border-radius: 5px; }
+#btn-monitor { left: 50%; transform: translateX(-50%); z-index: 10; }
+#btn-corredor-ir { left: 20px; z-index: 10; }
+#btn-corredor-voltar { right: 20px; z-index: 10; }
+
+/* Sistema de Câmeras */
+#camera-ui { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; flex-direction: column; align-items: center; z-index: 50; }
+.cam-view { width: 90%; height: 70%; border: 4px solid #444; margin-top: 40px; background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #111; }
+.cam-buttons { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+.cam-btn { padding: 12px; background: #333; color: white; border: 1px solid #777; cursor: pointer; }
+#close-cam { position: absolute; top: 15px; right: 20px; font-size: 35px; cursor: pointer; color: red; font-weight: bold; }
+
+/* Mensagens de Fim de Jogo */
+#game-over-screen, #win-screen { display: none; text-align: center; background: black; z-index: 100; position: absolute; width: 100%; height: 100%; padding-top: 20%; }
+#win-screen h1 { color: #00ff00; font-size: 60px; }
+#jumpscare-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none; z-index: 200; }
+#timer { position: absolute; top: 15px; right: 20px; font-size: 28px; background: rgba(0,0,0,0.5); padding: 5px 10px; border: 1px solid #333; }
