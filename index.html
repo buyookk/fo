@@ -3,64 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freddy's Night - Fullscreen</title>
+    <title>Freddy's Night - Full Image</title>
     <style>
         body { margin: 0; background: black; color: white; font-family: sans-serif; overflow: hidden; user-select: none; }
         #game-container { position: relative; width: 100vw; height: 100vh; }
 
-        /* Telas Ocupando Tudo */
-        .screen { position: absolute; width: 100%; height: 100%; display: none; background-size: cover; background-position: center; background-repeat: no-repeat; }
-        .active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        /* Telas: Imagem Inteira e Completa */
+        .screen { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            display: none; 
+            background-size: 100% 100%; /* Garante a imagem inteira na tela */
+            background-position: center; 
+            background-repeat: no-repeat; 
+        }
+        .active { display: block; }
 
-        /* Botões de Navegação Estilizados */
-        .btn-nav { position: absolute; bottom: 30px; padding: 25px; background: rgba(0,0,0,0.6); border: 2px solid rgba(255,255,255,0.3); color: white; cursor: pointer; font-weight: bold; z-index: 10; border-radius: 10px; }
-        #btn-to-corridor { left: 20px; }
-        #btn-to-office { right: 20px; }
-        #btn-monitor { bottom: 20px; left: 50%; transform: translateX(-50%); width: 250px; text-align: center; background: rgba(50,50,50,0.8); }
+        /* UI e Botões */
+        .btn-nav { 
+            position: absolute; 
+            bottom: 20px; 
+            padding: 15px 25px; 
+            background: rgba(0,0,0,0.7); 
+            border: 1px solid white; 
+            color: white; 
+            cursor: pointer; 
+            z-index: 10; 
+        }
+        #btn-to-corridor { left: 10px; }
+        #btn-to-office { right: 10px; }
+        #btn-monitor { left: 50%; transform: translateX(-50%); width: 180px; text-align: center; }
 
-        /* Monitor de Câmeras (Tela Toda) */
-        #camera-system { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 100; flex-direction: column; }
-        #cam-display { width: 100%; height: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; }
+        /* Sistema de Câmeras Fullscreen */
+        #camera-system { 
+            position: absolute; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            display: none; 
+            z-index: 100; 
+        }
+        #cam-display { 
+            width: 100%; height: 100%; 
+            background-size: 100% 100%; /* Imagem da câmera completa sem cortes */
+            background-position: center; 
+        }
         
-        .cam-controls { position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 110; }
-        .cam-btn { padding: 15px; background: rgba(0,0,0,0.8); color: white; border: 1px solid white; cursor: pointer; }
-        #close-cam { position: absolute; top: 20px; right: 30px; font-size: 50px; color: red; cursor: pointer; z-index: 120; text-shadow: 2px 2px 5px black; }
+        .cam-controls { 
+            position: absolute; 
+            bottom: 80px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            display: flex; gap: 10px; 
+        }
+        .cam-btn { padding: 12px; background: rgba(0,0,0,0.8); color: white; border: 1px solid white; cursor: pointer; }
+        #close-cam { position: absolute; top: 15px; right: 20px; font-size: 45px; color: red; cursor: pointer; z-index: 110; }
 
-        /* UI */
-        #timer { position: absolute; top: 20px; right: 20px; font-size: 32px; background: rgba(0,0,0,0.8); padding: 10px; border: 1px solid #555; z-index: 5; }
-        
-        /* Jumpscare */
-        #jumpscare-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none; z-index: 500; }
-        .end-screen { background: black; z-index: 600; text-align: center; }
+        /* Timer e Susto */
+        #timer { position: absolute; top: 15px; right: 15px; font-size: 28px; background: rgba(0,0,0,0.8); padding: 5px 10px; z-index: 5; }
+        #jumpscare-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; display: none; z-index: 500; }
+        .end-screen { background: black; text-align: center; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 600; }
     </style>
 </head>
 <body>
 
 <div id="game-container">
     <div id="menu" class="screen active" style="background-image: url('https://github.com/buyookk/fo/blob/main/imagens/escrit%C3%B3rio.png?raw=true');">
-        <div style="background: rgba(0,0,0,0.8); padding: 40px; border-radius: 20px; text-align: center;">
-            <h1 style="font-size: 45px; color: red;">FREDDY'S NIGHT</h1>
-            <button onclick="startGame()" style="padding: 20px 50px; font-size: 25px; cursor: pointer; background: white; color: black; border: none; font-weight: bold;">CONTINUAR</button>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; background: rgba(0,0,0,0.8); padding: 30px;">
+            <h1>FREDDY'S NIGHT</h1>
+            <button onclick="startGame()" style="padding: 15px 40px; font-size: 20px; cursor: pointer;">CONTINUAR</button>
         </div>
     </div>
 
     <div id="office" class="screen" style="background-image: url('https://github.com/buyookk/fo/blob/main/imagens/escrit%C3%B3rio.png?raw=true');">
         <div id="timer">5:00</div>
-        <div id="btn-to-corridor" class="btn-nav" onclick="changeRoom('corridor')">OLHAR CORREDOR</div>
-        <div id="btn-monitor" class="btn-nav" onclick="toggleMonitor(true)">ABRIR MONITOR</div>
+        <div id="btn-to-corridor" class="btn-nav" onclick="goToRoom('corridor')">CORREDOR</div>
+        <div id="btn-monitor" class="btn-nav" onclick="openCams()">MONITOR</div>
     </div>
 
-    <div id="corridor" class="screen" onclick="useFlashlight()">
-        <div id="btn-to-office" class="btn-nav" onclick="changeRoom('office')">VOLTAR</div>
+    <div id="corridor" class="screen" onclick="flashlight()">
+        <div id="btn-to-office" class="btn-nav" onclick="goToRoom('office')">VOLTAR</div>
     </div>
 
     <div id="camera-system">
-        <div id="close-cam" onclick="toggleMonitor(false)">✖</div>
+        <div id="close-cam" onclick="closeCams()">✖</div>
         <div id="cam-display"></div>
         <div class="cam-controls">
-            <button class="cam-btn" onclick="updateCam('palco')">CAM 01</button>
-            <button class="cam-btn" onclick="updateCam('cozinha')">CAM 02</button>
-            <button class="cam-btn" onclick="updateCam('gerador')">CAM 03</button>
+            <button class="cam-btn" onclick="setCam('palco')">CAM 01</button>
+            <button class="cam-btn" onclick="setCam('cozinha')">CAM 02</button>
+            <button class="cam-btn" onclick="setCam('gerador')">CAM 03</button>
         </div>
     </div>
 
@@ -69,13 +100,12 @@
     </video>
 
     <div id="win-screen" class="screen end-screen">
-        <h1 style="color: #00ff00; font-size: 60px;">FIM DE TURNO</h1>
-        <button onclick="location.reload()" style="padding: 20px;">VOLTAR AO MENU</button>
+        <h1 style="color: lime;">FIM DE TURNO</h1>
+        <button onclick="location.reload()">MENU</button>
     </div>
-
     <div id="game-over-screen" class="screen end-screen">
-        <h1 style="color: red; font-size: 60px;">GAME OVER</h1>
-        <button onclick="location.reload()" style="padding: 20px;">RECOMEÇAR</button>
+        <h1 style="color: red;">GAME OVER</h1>
+        <button onclick="location.reload()">RECOMEÇAR</button>
     </div>
 </div>
 
@@ -90,55 +120,55 @@
         cozinha_vazia: "https://github.com/buyookk/fo/blob/main/imagens/cozinha%20sem%20o%20freddy.png?raw=true",
         cozinha_freddy: "https://github.com/buyookk/fo/blob/main/imagens/cozinha%20com%20freddy.jpeg?raw=true",
         gerador_vazio: "https://github.com/buyookk/fo/blob/main/imagens/gerador%20sem%20freddy.png?raw=true",
-        gerador_freddy: "https://github.com/buyookk/fo/blob/main/imagens/freddy%20no%20palco.png?raw=true" 
+        gerador_freddy: "https://github.com/buyookk/fo/blob/main/imagens/freddy%20no%20palco.png?raw=true"
     };
 
     let freddyPos = "palco";
     let timeLeft = 300;
     let isPlaying = false;
-    let currentRoom = "menu";
-    let activeCam = "palco";
+    let currentCam = "palco";
+    let inRoom = "menu";
 
     function startGame() {
         isPlaying = true;
-        changeRoom('office');
-        startClock();
-        freddyLoop();
+        goToRoom('office');
+        startTimer();
+        freddyAI();
     }
 
-    function startClock() {
-        const t = document.getElementById('timer');
-        const clock = setInterval(() => {
-            if (!isPlaying) { clearInterval(clock); return; }
+    function startTimer() {
+        const timerUI = document.getElementById('timer');
+        const countdown = setInterval(() => {
+            if (!isPlaying) { clearInterval(countdown); return; }
             timeLeft--;
-            let mins = Math.floor(timeLeft / 60);
-            let secs = timeLeft % 60;
-            t.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-            if (timeLeft <= 0) { isPlaying = false; showEnd('win-screen'); }
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            timerUI.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+            if (timeLeft <= 0) { isPlaying = false; showFinish('win-screen'); }
         }, 1000);
     }
 
-    function freddyLoop() {
+    function freddyAI() {
         const path = ["palco", "cozinha", "gerador", "corredor", "sala"];
-        const move = setInterval(() => {
-            if (!isPlaying) { clearInterval(move); return; }
+        setInterval(() => {
+            if (!isPlaying) return;
             let idx = path.indexOf(freddyPos);
             if (Math.random() > 0.4 && freddyPos !== "sala") {
                 freddyPos = path[idx + 1];
-                if (document.getElementById('camera-system').style.display === 'flex') updateCam(activeCam);
+                if (document.getElementById('camera-system').style.display === 'block') setCam(currentCam);
             }
-        }, 7000); 
+        }, 7000);
     }
 
-    function changeRoom(room) {
+    function goToRoom(room) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(room).classList.add('active');
-        currentRoom = room;
+        inRoom = room;
         if (room === 'corridor') document.getElementById('corridor').style.backgroundImage = `url('${ASSETS.corredor_escuro}')`;
-        if (room === 'office' && freddyPos === 'sala') triggerSusto();
+        if (room === 'office' && freddyPos === 'sala') jumpscare();
     }
 
-    function useFlashlight() {
+    function flashlight() {
         const corr = document.getElementById('corridor');
         if (freddyPos === "corredor") {
             corr.style.backgroundImage = `url('${ASSETS.corredor_freddy}')`;
@@ -146,36 +176,40 @@
         } else {
             corr.style.backgroundImage = `url('${ASSETS.corredor_vazio}')`;
         }
-        setTimeout(() => { if (currentRoom === 'corridor') corr.style.backgroundImage = `url('${ASSETS.corredor_escuro}')`; }, 500);
+        setTimeout(() => { if (inRoom === 'corridor') corr.style.backgroundImage = `url('${ASSETS.corredor_escuro}')`; }, 400);
     }
 
-    function toggleMonitor(open) {
-        const sys = document.getElementById('camera-system');
-        sys.style.display = open ? 'flex' : 'none';
-        if (open) updateCam(activeCam);
-        if (!open && freddyPos === 'sala') triggerSusto();
+    function openCams() {
+        document.getElementById('camera-system').style.display = 'block';
+        setCam(currentCam);
     }
 
-    function updateCam(name) {
-        activeCam = name;
+    function closeCams() {
+        document.getElementById('camera-system').style.display = 'none';
+        if (freddyPos === 'sala') jumpscare();
+    }
+
+    function setCam(name) {
+        currentCam = name;
         const display = document.getElementById('cam-display');
         const img = (freddyPos === name) ? ASSETS[name + '_freddy'] : ASSETS[name + '_vazio'];
         display.style.backgroundImage = `url('${img}')`;
     }
 
-    function triggerSusto() {
+    function jumpscare() {
         isPlaying = false;
         const vid = document.getElementById('jumpscare-video');
         vid.style.display = 'block';
         vid.play();
         vid.onended = () => {
             vid.style.display = 'none';
-            showEnd('game-over-screen');
+            showFinish('game-over-screen');
         };
     }
 
-    function showEnd(id) {
+    function showFinish(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).style.display = 'flex';
         document.getElementById(id).classList.add('active');
     }
 </script>
